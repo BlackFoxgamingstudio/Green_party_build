@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Build Party - Functional Role Breakdown</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/github.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/highlight.min.js"></script>
+  
+  <!-- Markdown-it for rendering markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
+  
+  <!-- Mermaid for diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 1200px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+    h1 {
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #0d6efd;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #dee2e6;
+      margin-top: 2rem;
+    }
+    h3 {
+      color: #198754;
+    }
+    table {
+      width: 100%;
+      margin-bottom: 1rem;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      padding: 0.75rem;
+      border: 1px solid #dee2e6;
+    }
+    table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+    pre {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    code {
+      color: #d63384;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    blockquote {
+      border-left: 4px solid #0d6efd;
+      padding-left: 1rem;
+      color: #6c757d;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.25rem;
+      color: #6c757d;
+    }
+    #table-of-contents {
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      padding-right: 15px;
+    }
+    .toc-link {
+      display: block;
+      padding: 0.25rem 0;
+      color: #495057;
+      text-decoration: none;
+    }
+    .toc-link:hover {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    .toc-link.active {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+    .toc-h2 {
+      padding-left: 1rem;
+    }
+    .toc-h3 {
+      padding-left: 2rem;
+    }
+    @media (max-width: 991.98px) {
+      #table-of-contents {
+        position: static;
+        margin-bottom: 2rem;
+      }
+    }
+    @media print {
+      #table-of-contents {
+        display: none;
+      }
+      .col-lg-9 {
+        width: 100%;
+      }
+    }
+    #markdown-source {
+      display: none;
+    }
+    .navigation-bar {
+      margin-bottom: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .navigation-bar a {
+      margin-right: 20px;
+      color: #0d6efd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .navigation-bar a:hover {
+      text-decoration: underline;
+    }
+    .navigation-bar a.active {
+      font-weight: 700;
+      border-bottom: 2px solid #0d6efd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation bar -->
+    <div class="navigation-bar">
+      <a href="index.html">Overview</a>
+      <a href="GreenBuildParty.html" class="active">Roles & Tasks</a>
+      <a href="implementation.html">Implementation Guide</a>
+      <a href="GreenBuildParty_CostAndInventory.html">Cost & Inventory</a>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-3">
+        <div id="table-of-contents">
+          <h5>Table of Contents</h5>
+          <div id="toc-content"></div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div id="content">
+          <div class="loading">Loading content...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embedded markdown content -->
+  <script id="markdown-source" type="text/markdown">
+# Green Build Party - Functional Role Breakdown
+
+## Introduction
+
+The Green Build Party is a community-centered event that brings together volunteers, resources, and expertise to complete sustainable building projects. This document outlines the functional roles, responsibilities, and workflows required to successfully plan and execute these events.
+
+## Project Timeline Overview
+
+```mermaid
+gantt
+    title Green Build Party Project Timeline
+    dateFormat  YYYY-MM-DD
+    section Pre-Planning
+    Project Scoping           :a1, 2023-01-01, 14d
+    Team Assembly             :a2, after a1, 7d
+    Site Assessment           :a3, after a2, 7d
+    section Procurement
+    Materials Sourcing        :b1, after a3, 21d
+    Equipment Arrangement     :b2, after a3, 14d
+    Volunteer Recruitment     :b3, after a3, 28d
+    section Build Day
+    Site Preparation          :c1, after b1, 2d
+    Build Day Execution       :c2, after c1, 1d
+    section Post-Build
+    Site Cleanup              :d1, after c2, 1d
+    Documentation             :d2, after c2, 7d
+    Impact Assessment         :d3, after d2, 14d
+```
+
+## Core Team Structure
+
+The Green Build Party relies on a diverse team with complementary skills and responsibilities:
+
+### Leadership Roles
+
+| Role | Primary Responsibilities | Skills Required |
+|------|--------------------------|----------------|
+| Project Manager | Overall coordination, timeline management, stakeholder communication | Leadership, planning, communication, problem-solving |
+| Technical Lead | Design oversight, materials planning, build sequence planning | Construction knowledge, technical design, resource planning |
+| Volunteer Coordinator | Recruit, train, and manage volunteers | People management, scheduling, training |
+| Materials Coordinator | Source, procure, and manage all building materials | Procurement, inventory management, sustainable materials knowledge |
+| Community Liaison | Connect with local community, gather input, secure permissions | Community engagement, relationship building, local knowledge |
+
+### Support Roles
+
+| Role | Primary Responsibilities | Skills Required |
+|------|--------------------------|----------------|
+| Documentation Specialist | Record process, capture media, create guides | Photography, writing, organizational skills |
+| Safety Officer | Ensure site safety, train on safety procedures, manage first aid | Safety protocols, risk assessment, first aid certification |
+| Refreshments Coordinator | Plan, source, and distribute food and beverages | Food planning, dietary considerations, serving logistics |
+| Transportation Coordinator | Arrange material delivery, equipment transport, volunteer shuttles | Logistics, scheduling, route planning |
+
+## Role-Based Responsibility Matrix
+
+The RACI matrix below shows who is Responsible, Accountable, Consulted, and Informed for key project tasks:
+
+| Task | Project Manager | Technical Lead | Volunteer Coordinator | Materials Coordinator | Community Liaison |
+|------|----------------|----------------|----------------------|----------------------|-------------------|
+| Project Scoping | A/R | C | I | C | R |
+| Budget Planning | A/R | C | C | R | C |
+| Site Selection | A | C | I | I | R |
+| Materials Sourcing | I | C | I | A/R | C |
+| Volunteer Recruitment | I | I | A/R | I | C |
+| Build Day Schedule | A | R | R | C | C |
+| Safety Protocols | A | C | R | C | I |
+| Post-Event Assessment | A/R | R | R | R | R |
+
+## Phase 1: Pre-Planning Activities
+
+### Project Scoping
+
+1. Define project objectives and constraints
+2. Establish budget parameters
+3. Create preliminary design concepts
+4. Identify key stakeholders and partners
+
+### Team Assembly
+
+1. Identify required roles based on project scope
+2. Recruit core team members with relevant skills
+3. Define clear responsibilities and communication channels
+4. Conduct kickoff meeting to align on vision and approach
+
+### Site Assessment
+
+1. Evaluate potential sites against project requirements
+2. Conduct environmental and safety assessments
+3. Secure necessary permits and permissions
+4. Document existing conditions with photos and measurements
+
+## Phase 2: Procurement Activities
+
+### Materials Sourcing
+
+1. Create detailed materials list with specifications
+2. Identify sustainable and locally available options
+3. Solicit donations and discounted materials from suppliers
+4. Arrange for delivery and secure storage
+
+### Equipment Arrangement
+
+1. List required tools and equipment
+2. Source from team members, community borrowing, or rentals
+3. Verify functionality and safety of all equipment
+4. Create equipment stations and check-out system
+
+### Volunteer Recruitment
+
+1. Determine skill needs and volunteer capacity
+2. Create compelling recruitment messaging
+3. Utilize multiple channels: social media, community boards, partner networks
+4. Track signups and maintain communication with potential volunteers
+
+## Phase 3: Build Day Execution
+
+### Site Preparation
+
+1. Mark construction zones and safety areas
+2. Set up equipment stations and material staging areas
+3. Post signage for directions, safety, and procedures
+4. Prepare volunteer check-in and orientation space
+
+### Build Day Workflow
+
+```mermaid
+flowchart TD
+    A[Volunteer Check-in] --> B[Safety Orientation]
+    B --> C[Team Assignment]
+    C --> D[Skills Training]
+    D --> E[Supervised Construction]
+    E --> F[Rotation to New Tasks]
+    F --> G[Project Completion]
+    G --> H[Celebration & Recognition]
+```
+
+### Volunteer Management
+
+1. Implement check-in process with waivers and contact information
+2. Conduct general orientation and safety briefing
+3. Assign teams based on skills and project needs
+4. Provide ongoing supervision and support
+
+## Phase 4: Post-Build Activities
+
+### Site Cleanup
+
+1. Restore site to clean condition
+2. Properly dispose of or recycle waste materials
+3. Return borrowed equipment and unused materials
+4. Conduct final site inspection
+
+### Documentation & Reporting
+
+1. Compile photos, videos, and testimonials
+2. Create project summary with key metrics
+3. Document lessons learned and improvement opportunities
+4. Share results with stakeholders and community
+
+### Impact Assessment
+
+1. Measure environmental benefits (e.g., energy savings, water conservation)
+2. Calculate community engagement metrics
+3. Gather feedback from beneficiaries and participants
+4. Evaluate project against original objectives
+
+## Documentation & Media Workflow
+
+### Pre-Event Documentation
+
+- Site "before" photos and measurements
+- Planning documents and design sketches
+- Team and volunteer profiles
+
+### During-Event Documentation
+
+- Construction progress photos (timed intervals)
+- Volunteer activity and engagement
+- Key moments and milestones
+- Video interviews with participants
+
+### Post-Event Documentation
+
+- "Before and after" comparisons
+- Completed project from multiple angles
+- Team and volunteer group photos
+- Beneficiary interviews and reactions
+
+## Impact Measurement Framework
+
+| Impact Area | Metrics | Measurement Method |
+|-------------|---------|-------------------|
+| Environmental | Energy saved, waste diverted, carbon offset | Technical calculations, utility data |
+| Social | Volunteer hours, skills developed, community connections | Surveys, time tracking, interviews |
+| Economic | Value of improvements, local materials sourced, skills gained | Market comparisons, procurement data |
+| Educational | Knowledge transfer, new skills acquired, awareness increased | Pre/post surveys, follow-up interviews |
+
+## Business Model Integration
+
+### Revenue Streams
+
+1. Corporate sponsorships
+2. Material donations and in-kind support
+3. Volunteer registration fees (optional/sliding scale)
+4. Grants and foundation support
+5. Local business partnerships
+
+### Cost Structure
+
+1. Materials and supplies
+2. Equipment rental
+3. Staff/coordinator compensation
+4. Insurance and permits
+5. Food and refreshments
+6. Marketing and promotion
+
+## Resource Requirements
+
+### Human Resources
+
+- Core team: 5-8 dedicated individuals
+- Skilled volunteers: 5-10 with specific expertise
+- General volunteers: 15-30 depending on project scope
+
+### Material Resources
+
+- Building materials (specific to project)
+- Tools and equipment
+- Safety gear
+- Signage and instructional materials
+- Food and beverages
+
+### Information Resources
+
+- Project plans and designs
+- Training materials
+- Safety protocols
+- Contact lists and emergency procedures
+- Documentation templates
+
+## Appendix: Templates and Checklists
+
+### Project Planning Checklist
+
+- [ ] Project goals defined
+- [ ] Budget established
+- [ ] Timeline created
+- [ ] Core team assembled
+- [ ] Site secured
+- [ ] Permits obtained
+- [ ] Materials list created
+- [ ] Equipment needs identified
+- [ ] Volunteer recruitment plan developed
+- [ ] Safety plan documented
+
+### Volunteer Communication Templates
+
+#### Recruitment Message
+
+```
+Join us for a Green Build Party!
+
+Date: [Date]
+Time: [Time]
+Location: [Location]
+
+Help us build a more sustainable community by participating in our upcoming green building project. No experience necessary - just bring your enthusiasm and willingness to learn!
+
+What we're building: [Brief project description]
+What to bring: [List items]
+What we provide: [List provisions]
+
+Register at: [Link]
+Questions? Contact: [Contact information]
+```
+
+#### Confirmation Email
+
+```
+Thank you for registering for the Green Build Party!
+
+We're excited to have you join us on [Date] from [Start time] to [End time] at [Location].
+
+Important details:
+- Please arrive 15 minutes early for check-in
+- Wear comfortable clothes that can get dirty
+- Bring: [List items]
+- We'll provide: [List provisions]
+- Lunch and refreshments will be available
+
+If you have any questions or need to cancel, please contact [Contact person] at [Contact information].
+
+We look forward to building with you!
+```
+
+## Data Breakdown & Key Metrics
+
+The charts and diagrams in this document are built on structured datasets that provide actionable metrics for successful Green Build Party planning and execution. Below is a comprehensive explanation of the datasets used:
+
+### Role Matrix Dataset
+
+The RACI responsibility matrix is built from the following dataset structure:
+
+| Role | Task | Responsibility Type | Description |
+|------|------|---------------------|-------------|
+| Project Lead | Project Selection | Responsible | Primary decision maker for project selection |
+| Core Team | Site Assessment | Accountable | Must ensure thorough site assessment is completed |
+| Community Liaison | Volunteer Recruitment | Responsible | Directly handles volunteer outreach and sign-up |
+| Technical Lead | Materials Selection | Consulted | Provides expert input on material choices |
+| Volunteer Coordinator | Skill Matching | Responsible | Assigns volunteers based on skill assessment |
+| Documentation Specialist | Photo/Video Coverage | Responsible | Captures build process for documentation |
+| Safety Officer | Equipment Inspection | Accountable | Ensures all equipment passes safety checks |
+
+This dataset allows for clear assignment of responsibilities across 20+ critical project tasks, ensuring nothing falls through the cracks during planning and implementation.
+
+### Timeline Dataset Structure
+
+The project timeline Gantt chart utilizes time-based task data with dependencies:
+
+| Task ID | Task Name | Start Date | Duration (days) | Dependencies | Assigned To |
+|---------|-----------|------------|-----------------|--------------|-------------|
+| 1 | Project Selection | Day 1 | 14 | None | Project Lead |
+| 2 | Team Assembly | Day 15 | 7 | 1 | Project Lead |
+| 3 | Initial Site Assessment | Day 22 | 7 | 2 | Technical Lead |
+| 4 | Materials Sourcing | Day 29 | 21 | 3 | Materials Coordinator |
+| 5 | Volunteer Recruitment | Day 20 | 28 | 2 | Community Liaison |
+| 6 | Build Day Preparation | Day 50 | 4 | 3, 4, 5 | Core Team |
+| 7 | Build Day | Day 54 | 1 | 6 | All Teams |
+| 8 | Documentation | Day 55 | 7 | 7 | Documentation Team |
+| 9 | Follow-up Assessment | Day 62 | 7 | 8 | Project Lead |
+
+The timeline dataset enables visual planning and tracking of critical path items, with built-in dependencies ensuring proper sequencing of activities.
+
+### Skills Assessment Dataset
+
+The volunteer skill assessment matrix is structured as follows:
+
+| Skill Category | Skill Level | Description | Required Training | Min. Volunteers Needed |
+|----------------|-------------|-------------|-------------------|------------------------|
+| Carpentry | Beginner | Basic measuring, cutting, hammering | Yes - Safety | 8-10 |
+| Carpentry | Intermediate | Framing, basic joinery | No | 4-6 |
+| Carpentry | Advanced | Complex structures, finishing | No | 2-3 |
+| Electrical | Beginner | Wire stripping, simple connections | Yes - Safety | 4-5 |
+| Electrical | Intermediate | Circuit installation, testing | No | 2-3 |
+| Electrical | Advanced | System design, troubleshooting | No | 1-2 |
+| Plumbing | Beginner | Pipe cutting, basic connections | Yes - Safety | 3-4 |
+| Plumbing | Intermediate | System installation | No | 2-3 |
+| Documentation | Any | Photography, note-taking | Yes - Brief | 2-3 |
+| Support | Any | Food, water, materials management | Yes - Brief | 4-6 |
+
+This dataset enables effective volunteer management, ensuring appropriate skill distribution across teams while identifying training needs.
+
+### Materials Dataset Structure
+
+The sustainable materials selection process is guided by a comprehensive dataset:
+
+| Material Category | Item | Quantity | Sustainable Options | Local Source | Cost Range | Environmental Impact |
+|-------------------|------|----------|---------------------|--------------|------------|----------------------|
+| Lumber | 2x4x8' | 50 | FSC-certified, Reclaimed | City Recycling Center | $3-7/each | Low-Medium |
+| Lumber | 4x4x8' | 12 | FSC-certified, Reclaimed | Habitat ReStore | $8-15/each | Low-Medium |
+| Fasteners | 3" Deck Screws | 5 lbs | Galvanized, Stainless | Local Hardware | $30-45/box | Medium |
+| Roofing | Metal Panels | 200 sq ft | Recycled content | EcoBuilders Supply | $2-4/sq ft | Low |
+| Insulation | Batt | 100 sq ft | Cotton, Wool, Cellulose | Green Building Center | $1-2/sq ft | Low |
+| Paint | Exterior | 5 gallons | Low-VOC, Natural | Green Living Store | $35-50/gal | Low |
+
+This dataset supports sourcing decisions that balance sustainability, availability, cost, and environmental impact across all materials needed.
+
+### Impact Measurement Dataset
+
+Project impact is tracked using the following metrics:
+
+| Impact Category | Metric | Measurement Method | Baseline | Target | Actual |
+|-----------------|--------|-------------------|----------|--------|--------|
+| Environmental | Carbon Offset (tons) | Calculation | 0 | 5-10 | TBD |
+| Environmental | Water Saved (gallons/yr) | Metering | 0 | 5,000-10,000 | TBD |
+| Environmental | Waste Diverted (lbs) | Weighing | 0 | 1,000-2,000 | TBD |
+| Social | Volunteers Engaged | Count | 0 | 30-50 | TBD |
+| Social | New Skills Learned | Survey | 0 | 60-100 | TBD |
+| Social | Community Connections | Network Analysis | 0 | 40-60 | TBD |
+| Economic | Money Saved ($) | Calculation | 0 | $5,000-10,000 | TBD |
+| Economic | Local Business Engaged | Count | 0 | 5-10 | TBD |
+
+This impact dataset provides the foundation for project evaluation and storytelling, communicating the multi-dimensional value created through each Green Build Party.
+
+### Data Visualization Technical Notes
+
+All charts and diagrams in this document are rendered using the following technologies:
+
+1. **Mermaid.js** - For flowcharts, Gantt charts, and sequence diagrams
+2. **Chart.js** - For quantitative data visualizations
+3. **D3.js** - For complex interactive visualizations
+
+The raw data for these visualizations is stored in structured JSON format within the application, allowing for dynamic updates and customization based on specific project parameters.
+
+Each visualization is designed to be:
+- Responsive across device sizes
+- Accessible to screen readers
+- Printable for offline reference
+- Exportable to common formats (PNG, PDF)
+
+This integrated data-visualization approach ensures that complex project information is presented in the most intuitive and actionable format for all stakeholders.
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Make sure highlight.js is initialized first
+      if (typeof hljs !== 'undefined') {
+        hljs.highlightAll();
+      } else {
+        console.error("Highlight.js is not loaded");
+      }
+      
+      // Initialize mermaid
+      mermaid.initialize({ startOnLoad: true });
+      
+      // Get the markdown content from the embedded script
+      const markdownElement = document.getElementById('markdown-source');
+      const markdown = markdownElement.textContent;
+      
+      // Initialize markdown-it with safe highlight function
+      const md = window.markdownit({
+        html: true,
+        linkify: true,
+        typographer: true,
+        highlight: function (str, lang) {
+          if (lang && typeof hljs !== 'undefined' && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(str, { language: lang }).value;
+            } catch (err) {
+              console.error("Highlight error:", err);
+              return ''; // Use default escaping
+            }
+          }
+          return ''; // Use default escaping
+        }
+      });
+      
+      // Render the markdown content
+      const html = md.render(markdown);
+      document.getElementById('content').innerHTML = html;
+      
+      // Process mermaid diagrams
+      try {
+        mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+      } catch (err) {
+        console.error("Mermaid initialization error:", err);
+      }
+      
+      // Build table of contents
+      buildTableOfContents();
+      
+      // Initialize smooth scrolling for anchor links
+      initSmoothScrolling();
+    });
+    
+    function buildTableOfContents() {
+      const headings = document.querySelectorAll('h2, h3');
+      const tocContent = document.getElementById('toc-content');
+      
+      headings.forEach(heading => {
+        // Create ID if none exists
+        if (!heading.id) {
+          heading.id = heading.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+        }
+        
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent;
+        link.className = `toc-link toc-${heading.tagName.toLowerCase()}`;
+        
+        tocContent.appendChild(link);
+      });
+    }
+    
+    function initSmoothScrolling() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetElement = document.querySelector(this.getAttribute('href'));
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+            
+            // Update active state in TOC
+            document.querySelectorAll('.toc-link').forEach(link => {
+              link.classList.remove('active');
+            });
+            this.classList.add('active');
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html> 

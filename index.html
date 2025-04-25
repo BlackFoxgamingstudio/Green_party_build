@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Build Party - Functional Role Breakdown</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/github.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/highlight.min.js"></script>
+  
+  <!-- Markdown-it for rendering markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
+  
+  <!-- Mermaid for diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 1200px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+    h1 {
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #0d6efd;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #dee2e6;
+      margin-top: 2rem;
+    }
+    h3 {
+      color: #198754;
+    }
+    table {
+      width: 100%;
+      margin-bottom: 1rem;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      padding: 0.75rem;
+      border: 1px solid #dee2e6;
+    }
+    table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+    pre {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    code {
+      color: #d63384;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    blockquote {
+      border-left: 4px solid #0d6efd;
+      padding-left: 1rem;
+      color: #6c757d;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.25rem;
+      color: #6c757d;
+    }
+    #table-of-contents {
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      padding-right: 15px;
+    }
+    .toc-link {
+      display: block;
+      padding: 0.25rem 0;
+      color: #495057;
+      text-decoration: none;
+    }
+    .toc-link:hover {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    .toc-link.active {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+    .toc-h2 {
+      padding-left: 1rem;
+    }
+    .toc-h3 {
+      padding-left: 2rem;
+    }
+    @media (max-width: 991.98px) {
+      #table-of-contents {
+        position: static;
+        margin-bottom: 2rem;
+      }
+    }
+    @media print {
+      #table-of-contents {
+        display: none;
+      }
+      .col-lg-9 {
+        width: 100%;
+      }
+    }
+    #markdown-source {
+      display: none;
+    }
+    .navigation-bar {
+      margin-bottom: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .navigation-bar a {
+      margin-right: 20px;
+      color: #0d6efd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .navigation-bar a:hover {
+      text-decoration: underline;
+    }
+    .navigation-bar a.active {
+      font-weight: 700;
+      border-bottom: 2px solid #0d6efd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation bar -->
+    <div class="navigation-bar">
+      <a href="index.html" class="active">Overview</a>
+      <a href="storyboard.html" class="active">Visual Storyboard</a>
+      <a href="GreenBuildParty_CostAndInventory.html">Cost & Inventory</a>
+      <a href="GreenBuildParty.html">Roles & Tasks</a>
+            <a href="implementation.html">Implementation Guide</a>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-3">
+        <div id="table-of-contents">
+          <h5>Table of Contents</h5>
+          <div id="toc-content"></div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div id="content">
+          <div class="loading">Loading content...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embedded markdown content -->
+  <script id="markdown-source" type="text/markdown">
+# Green Build Party - Functional Role Breakdown
+
+## Overview
+
+This document provides a comprehensive functional breakdown of all roles, steps, activities, and tasks involved in planning and executing a Green Build Party, based on the Green Build Party Implementation Plan. The information is organized into clear sections with supporting data tables, diagrams, and charts to facilitate understanding and implementation.
+
+## Introduction
+
+A Green Build Party is a community-driven event that brings together volunteers to complete sustainable building projects while fostering community connections, developing skills, and promoting environmental stewardship. This approach transforms traditional construction into a collaborative celebration that achieves multiple social, environmental, and economic goals simultaneously.
+
+### Core Principles
+
+Green Build Parties are founded on four essential principles:
+
+1. **Community Engagement** - Building meaningful connections between diverse community members
+2. **Sustainability** - Utilizing environmentally responsible materials and methods
+3. **Skill Development** - Creating opportunities for learning and capability building
+4. **Resource Efficiency** - Maximizing impact while minimizing waste and costs
+
+These principles are woven throughout the planning, execution, and follow-up phases of every project.
+
+```mermaid
+graph TD
+    A[Green Build Party Core Principles] --> B[Community Engagement]
+    A --> C[Sustainability]
+    A --> D[Skill Development]
+    A --> E[Resource Efficiency]
+    
+    B --> F[Volunteer Recruitment]
+    B --> G[Stakeholder Involvement]
+    B --> H[Relationship Building]
+    
+    C --> I[Eco-friendly Materials]
+    C --> J[Waste Reduction]
+    C --> K[Energy Efficiency]
+    
+    D --> L[Skills Assessment]
+    D --> M[Training Opportunities]
+    D --> N[Knowledge Transfer]
+    
+    E --> O[Cost Management]
+    E --> P[Material Optimization]
+    E --> Q[Time Efficiency]
+
+    style A fill:#4CAF50,stroke:#388E3C,color:white
+    style B fill:#81C784,stroke:#4CAF50
+    style C fill:#81C784,stroke:#4CAF50
+    style D fill:#81C784,stroke:#4CAF50
+    style E fill:#81C784,stroke:#4CAF50
+```
+
+## Project Timeline Overview
+
+A typical Green Build Party project spans approximately 9-12 weeks from initial concept to completion. The timeline is divided into four primary phases:
+
+1. **Pre-Planning** (Weeks 1-3): Project selection, team assembly, initial assessments
+2. **Procurement** (Weeks 4-7): Materials sourcing, volunteer recruitment, logistics planning
+3. **Build Day Execution** (Week 8): The actual community build event
+4. **Post-Build Activities** (Weeks 9-12): Documentation, impact assessment, celebratory follow-up
+
+```mermaid
+gantt
+    title Green Build Party Timeline
+    dateFormat  YYYY-MM-DD
+    section Pre-Planning
+    Project Selection           :a1, 2023-06-01, 14d
+    Team Assembly               :a2, after a1, 7d
+    Initial Site Assessment     :a3, after a2, 7d
+    section Procurement
+    Materials Sourcing          :b1, after a3, 21d
+    Volunteer Recruitment       :b2, 2023-06-22, 28d
+    Logistics Planning          :b3, after a3, 14d
+    section Build Day
+    Final Preparations          :c1, after b1, 3d
+    Build Day Event             :milestone, after c1, 0d
+    section Post-Build
+    Documentation               :d1, after c1, 7d
+    Impact Assessment           :d2, after d1, 7d
+    Celebration & Follow-up     :d3, after d2, 7d
+```
+
+## Core Team Structure
+
+The success of a Green Build Party depends on a well-structured core team with clearly defined responsibilities. The organizational structure includes:
+
+### Leadership Roles
+
+1. **Project Lead** - Overall coordination and decision-making authority
+2. **Technical Lead** - Engineering expertise and build quality oversight
+3. **Community Liaison** - Stakeholder engagement and volunteer coordination
+4. **Documentation Specialist** - Process capture and impact reporting
+
+### Support Roles
+
+1. **Safety Officer** - Risk management and safety protocol enforcement
+2. **Materials Coordinator** - Sourcing, logistics, and inventory management
+3. **Volunteer Coordinator** - Recruitment, skill matching, and orientation
+4. **Food & Refreshments Coordinator** - Meals and hydration planning
+
+```mermaid
+flowchart TD
+    A[Project Lead] --> B[Technical Lead]
+    A --> C[Community Liaison]
+    A --> D[Documentation Specialist]
+    A --> E[Safety Officer]
+    
+    B --> F[Build Team Leaders]
+    C --> G[Volunteer Coordinator]
+    C --> H[Food & Refreshments]
+    D --> I[Media Team]
+    E --> J[First Aid Station]
+    
+    F --> K[Skilled Volunteers]
+    G --> L[General Volunteers]
+    I --> M[Photographers/Videographers]
+    
+    style A fill:#01579B,stroke:#01579B,color:white
+    style B fill:#0288D1,stroke:#0288D1,color:white
+    style C fill:#0288D1,stroke:#0288D1,color:white
+    style D fill:#0288D1,stroke:#0288D1,color:white
+    style E fill:#0288D1,stroke:#0288D1,color:white
+```
+
+## Role-Based Responsibility Matrix
+
+The RACI (Responsible, Accountable, Consulted, Informed) matrix provides clarity on who is responsible for each task throughout the project lifecycle. This systematic approach ensures nothing falls through the cracks and each team member understands their role.
+
+Please refer to the [Roles & Tasks](GreenBuildParty.html) page for the detailed RACI matrix and comprehensive task breakdowns.
+
+## Impact Measurement Framework
+
+Each Green Build Party generates multiple forms of value that can be measured across environmental, social, and economic dimensions:
+
+### Environmental Impact
+
+- **Carbon Offset** - Emissions avoided through sustainable building practices
+- **Resource Conservation** - Water, energy, and material resources saved
+- **Waste Reduction** - Materials diverted from landfill through reuse and recycling
+
+### Social Impact
+
+- **Community Building** - New connections formed between community members
+- **Skill Development** - Technical and leadership skills gained by participants
+- **Knowledge Transfer** - Sustainable building knowledge disseminated
+
+### Economic Impact
+
+- **Cost Savings** - Direct financial savings compared to conventional contracting
+- **Value Creation** - Increased property value and utility for beneficiaries
+- **Local Economic Activity** - Engagement with local businesses and suppliers
+
+```mermaid
+pie title Green Build Party Impact Distribution
+    "Environmental Impact" : 33
+    "Social Impact" : 34
+    "Economic Impact" : 33
+```
+
+## Business Model Integration
+
+Green Build Parties can be integrated into various business models across the sustainable building ecosystem:
+
+1. **Non-Profit Community Development** - As a core program offering
+2. **Social Enterprise** - As a fee-for-service model with sliding scale
+3. **Sustainable Building Contractors** - As a community engagement strategy
+4. **Materials Suppliers** - As a demonstration and educational platform
+5. **Corporate Social Responsibility** - As a team-building and community investment
+
+For detailed implementation guidelines and step-by-step execution plans, please visit the [Implementation Guide](implementation.html) page.
+
+## Project Examples & Case Studies
+
+### Urban Community Garden Greenhouse
+
+A 12' x 16' greenhouse built using primarily recycled materials during a single-day event with 35 volunteers. The structure extended the growing season by 8 weeks at both ends, increasing food production by 40% for a community garden serving low-income families.
+
+### School District Outdoor Classroom
+
+An outdoor learning pavilion constructed for an elementary school using sustainable timber and recycled roofing materials. Built by 50 volunteers including parents, teachers, and students, this project saved the school district $15,000 compared to traditional construction costs.
+
+### Disaster Relief Tool Library
+
+A community tool library built to support disaster preparation and recovery, featuring modular storage systems and solar charging stations. Created by 25 volunteers from local emergency response teams and neighborhood associations, the facility now serves as both a tool-sharing hub and emergency resource center.
+
+## Resource Requirements
+
+Successful Green Build Parties require careful planning of resources across several categories:
+
+### Human Resources
+
+- Core Team: 5-8 people
+- Build Team Leaders: 3-5 experienced builders
+- General Volunteers: 15-50 community members
+- Specialized Skills: Carpentry, electrical, plumbing as needed
+
+### Material Resources
+
+- Primary Building Materials: Lumber, fasteners, roofing, etc.
+- Tools: Hand tools, power tools, safety equipment
+- Support Materials: Signage, documentation supplies, first aid
+
+### Logistical Resources
+
+- Transportation: For materials delivery and volunteer access
+- Food & Hydration: Meals and drinks for all participants
+- Sanitation: Restroom facilities and hand washing stations
+
+For detailed datasets and visual explanations of all processes and workflows, please explore the [Roles & Tasks](GreenBuildParty.html) and [Implementation Guide](implementation.html) pages.
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Make sure highlight.js is initialized first
+      if (typeof hljs !== 'undefined') {
+        hljs.highlightAll();
+      } else {
+        console.error("Highlight.js is not loaded");
+      }
+      
+      // Initialize mermaid
+      mermaid.initialize({ startOnLoad: true });
+      
+      // Get the markdown content from the embedded script
+      const markdownElement = document.getElementById('markdown-source');
+      const markdown = markdownElement.textContent;
+      
+      // Initialize markdown-it with safe highlight function
+      const md = window.markdownit({
+        html: true,
+        linkify: true,
+        typographer: true,
+        highlight: function (str, lang) {
+          if (lang && typeof hljs !== 'undefined' && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(str, { language: lang }).value;
+            } catch (err) {
+              console.error("Highlight error:", err);
+              return ''; // Use default escaping
+            }
+          }
+          return ''; // Use default escaping
+        }
+      });
+      
+      // Render the markdown content
+      const html = md.render(markdown);
+      document.getElementById('content').innerHTML = html;
+      
+      // Process mermaid diagrams
+      try {
+        mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+      } catch (err) {
+        console.error("Mermaid initialization error:", err);
+      }
+      
+      // Build table of contents
+      buildTableOfContents();
+      
+      // Initialize smooth scrolling for anchor links
+      initSmoothScrolling();
+    });
+    
+    function buildTableOfContents() {
+      const headings = document.querySelectorAll('h1, h2, h3');
+      const tocContent = document.getElementById('toc-content');
+      
+      headings.forEach(heading => {
+        // Create ID if none exists
+        if (!heading.id) {
+          heading.id = heading.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+        }
+        
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent;
+        link.className = `toc-link toc-${heading.tagName.toLowerCase()}`;
+        
+        tocContent.appendChild(link);
+      });
+    }
+    
+    function initSmoothScrolling() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetElement = document.querySelector(this.getAttribute('href'));
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+            
+            // Update active state in TOC
+            document.querySelectorAll('.toc-link').forEach(link => {
+              link.classList.remove('active');
+            });
+            this.classList.add('active');
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html> 

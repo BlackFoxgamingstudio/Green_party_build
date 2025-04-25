@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Build Party - Implementation Guide</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/github.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/highlight.min.js"></script>
+  
+  <!-- Markdown-it for rendering markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
+  
+  <!-- Mermaid for diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 1200px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+    h1 {
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #0d6efd;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #dee2e6;
+      margin-top: 2rem;
+    }
+    h3 {
+      color: #198754;
+    }
+    table {
+      width: 100%;
+      margin-bottom: 1rem;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      padding: 0.75rem;
+      border: 1px solid #dee2e6;
+    }
+    table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+    pre {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    code {
+      color: #d63384;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    blockquote {
+      border-left: 4px solid #0d6efd;
+      padding-left: 1rem;
+      color: #6c757d;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.25rem;
+      color: #6c757d;
+    }
+    #table-of-contents {
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      padding-right: 15px;
+    }
+    .toc-link {
+      display: block;
+      padding: 0.25rem 0;
+      color: #495057;
+      text-decoration: none;
+    }
+    .toc-link:hover {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    .toc-link.active {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+    .toc-h2 {
+      padding-left: 1rem;
+    }
+    .toc-h3 {
+      padding-left: 2rem;
+    }
+    @media (max-width: 991.98px) {
+      #table-of-contents {
+        position: static;
+        margin-bottom: 2rem;
+      }
+    }
+    @media print {
+      #table-of-contents {
+        display: none;
+      }
+      .col-lg-9 {
+        width: 100%;
+      }
+    }
+    #markdown-source {
+      display: none;
+    }
+    .navigation-bar {
+      margin-bottom: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .navigation-bar a {
+      margin-right: 20px;
+      color: #0d6efd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .navigation-bar a:hover {
+      text-decoration: underline;
+    }
+    .navigation-bar a.active {
+      font-weight: 700;
+      border-bottom: 2px solid #0d6efd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation bar -->
+    <div class="navigation-bar">
+      <a href="index.html">Overview</a>
+      <a href="GreenBuildParty.html">Roles & Tasks</a>
+      <a href="implementation.html" class="active">Implementation Guide</a>
+      <a href="GreenBuildParty_CostAndInventory.html">Cost & Inventory</a>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-3">
+        <div id="table-of-contents">
+          <h5>Table of Contents</h5>
+          <div id="toc-content"></div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div id="content">
+          <div class="loading">Loading content...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embedded markdown content -->
+  <script id="markdown-source" type="text/markdown">
+# Green Build Party - Implementation Guide
+
+## Introduction
+
+This implementation guide builds on the Green Build Party Functional Role Breakdown, providing practical guidance for executing sustainable building projects in community settings. While the functional breakdown defines the "what" and "who," this guide focuses on the "how" - offering actionable methodologies, templates, and best practices derived from successful implementations.
+
+## Implementation Principles
+
+The Green Build Party model operates on five core principles that guide all implementation decisions:
+
+1. **Community-Centered Design**: Projects must serve genuine community needs and involve community members in planning and execution.
+2. **Sustainability First**: Materials, methods, and outcomes prioritize environmental sustainability at every stage.
+3. **Knowledge Transfer**: Each build serves as a learning opportunity with deliberate skill-building components.
+4. **Scalable Approach**: Designs and processes can scale from small demonstrations to larger community implementations.
+5. **Measurable Impact**: Outcomes must be measurable against environmental, social, and economic metrics.
+
+These principles inform every aspect of implementation, from materials selection to volunteer coordination.
+
+## Project Selection Criteria
+
+Successful Green Build Party implementations begin with selecting the right projects. Use the following criteria matrix to evaluate potential projects:
+
+| Criterion | Weight | Questions to Answer | Scoring |
+|-----------|:------:|---------------------|---------|
+| Community Need | 25% | • Is there clear demand from community members?<br>• Does it address a local sustainability gap?<br>• Will it serve multiple community members? | 1-5 scale based on verified need |
+| Technical Feasibility | 20% | • Can it be completed in a single day?<br>• Do we have access to the right expertise?<br>• Are materials and tools readily available? | 1-5 scale based on complexity |
+| Educational Value | 20% | • Does it demonstrate key sustainability principles?<br>• Will participants learn valuable skills?<br>• Can it generate teaching materials? | 1-5 scale based on learning opportunities |
+| Host Commitment | 15% | • Is the host willing to contribute resources?<br>• Will the host maintain the installation?<br>• Can the host facilitate future knowledge sharing? | 1-5 scale based on commitment level |
+| Cost-to-Impact Ratio | 10% | • Is the financial investment proportional to impact?<br>• Can we leverage donated materials?<br>• Will it create ongoing value? | 1-5 scale based on ROI |
+| Replicability | 10% | • Can the design be adapted for other sites?<br>• Will it generate reusable documentation?<br>• Does it use accessible materials and methods? | 1-5 scale based on replication potential |
+
+Score each project across these criteria, multiply by weight percentages, and prioritize those with the highest total scores. Projects scoring below 3.0 should undergo redesign or reconsideration.
+
+## Implementation Timeline Expansion
+
+The following expanded timeline provides a detailed breakdown of implementation tasks and milestones:
+
+### 6 Weeks Before Build
+
+| Week | Priority Tasks | Team Members | Deliverables |
+|------|----------------|--------------|-------------|
+| Week 1 | • Initial site assessment<br>• Host needs interview<br>• Preliminary design concept<br>• Core team recruitment | • Project Lead<br>• Foreman<br>• Solar Expert | • Site assessment report<br>• Design sketch<br>• Team commitment list |
+
+#### Site Assessment Template
+
+For consistent site evaluations, use this standard assessment approach:
+
+1. **Physical Characteristics**
+   - Measure and map the available space (minimum 10' x 10' for most projects)
+   - Document sun exposure throughout the day (minimum 4 hours direct sun)
+   - Evaluate soil conditions and drainage patterns
+   - Identify existing structures and vegetation
+   - Note access points for materials and volunteers
+
+2. **Resource Availability**
+   - Locate water sources and distance to usage area
+   - Identify electrical connection options (if needed)
+   - Document available storage or security features
+   - Survey available on-site materials for reuse
+
+3. **Constraints Analysis**
+   - Note permitting requirements or restrictions
+   - Identify potential safety hazards
+   - Document neighbor considerations
+   - Assess seasonal factors (weather, water availability)
+
+Each assessment should include a detailed site map with measurements, photos from multiple angles, and sun pattern documentation.
+
+### 4-5 Weeks Before Build
+
+| Week | Priority Tasks | Team Members | Deliverables |
+|------|----------------|--------------|-------------|
+| Week 2 | • Finalize project scope<br>• Complete detailed design<br>• Material list creation<br>• Budget development | • Project Manager<br>• Foreman<br>• Materials Coordinator | • Project brief<br>• Detailed design<br>• Materials BOM<br>• Draft budget |
+
+#### Design Documentation Standards
+
+All Green Build Party designs should include:
+
+1. **Overview Schematics**
+   - Top-down site plan showing installation location
+   - Side elevation views from multiple angles
+   - Component relationship diagrams
+
+2. **Detailed Drawings**
+   - Construction details with measurements
+   - Foundation specifications
+   - Component attachment methods
+   - Water/electrical system schematics
+
+3. **Materials Specifications**
+   - Detailed bill of materials (BOM)
+   - Material alternatives (primary and substitutions)
+   - Sustainable sourcing notes
+   - Quantity calculations with 15% overage
+
+4. **Assembly Sequence**
+   - Step-by-step construction sequence
+   - Team allocation recommendations
+   - Time estimates for each phase
+   - Quality check points
+
+Designs should be created in easily shareable formats and include both technical and simplified volunteer-friendly versions.
+
+### 3 Weeks Before Build
+
+| Week | Priority Tasks | Team Members | Deliverables |
+|------|----------------|--------------|-------------|
+| Week 3 | • Launch volunteer recruitment<br>• Secure key material sources<br>• Finalize technical details<br>• Address permitting requirements | • Project Manager<br>• Technical Specialists<br>• Materials Coordinator | • Recruitment materials<br>• Confirmed material sources<br>• Technical specifications<br>• Permit applications |
+
+#### Volunteer Recruitment Strategies
+
+Effective volunteer recruitment combines multiple approaches:
+
+1. **Core Team Recruitment**
+   - Target individuals with relevant skills first
+   - Provide clear role descriptions and time commitments
+   - Use direct personal invitations for key roles
+   - Emphasize skill development opportunities
+
+2. **General Volunteer Outreach**
+   - Create compelling project descriptions emphasizing impact
+   - Use visual mockups to generate interest
+   - Specify beginner-friendly aspects of participation
+   - Clearly communicate the event details (date, time, location)
+
+3. **Recruitment Channels**
+   - Existing volunteer databases and past participants
+   - Partner organizations and their networks
+   - Social media announcements with engaging visuals
+   - Community bulletin boards and newsletters
+   - Host organization's constituent network
+
+4. **Registration Management**
+   - Use simple online registration forms
+   - Collect skill levels and interests
+   - Send immediate confirmation with basic information
+   - Follow up with detailed information 1 week before event
+
+### 2 Weeks Before Build
+
+| Week | Priority Tasks | Team Members | Deliverables |
+|------|----------------|--------------|-------------|
+| Week 4 | • Order remaining materials<br>• Prepare construction guides<br>• Develop safety plan<br>• Schedule material deliveries | • Materials Coordinator<br>• Documentation Lead<br>• Safety Specialist<br>• Project Manager | • Construction guides<br>• Safety protocol<br>• Complete material orders<br>• Delivery schedule |
+
+#### Construction Guide Development
+
+Create clear, visual construction guides for each major project component:
+
+1. **Guide Format Requirements**
+   - Step-by-step instructions with numbered steps
+   - Visual diagrams for each step
+   - Material and tool requirements listed at beginning
+   - Time estimates and number of people needed
+   - Quality check indicators at critical points
+   - Troubleshooting tips for common issues
+
+2. **Language Considerations**
+   - Use plain, jargon-free language
+   - Include a simple glossary for necessary technical terms
+   - Present information in both text and visual formats
+   - Consider multilingual versions if appropriate for community
+
+3. **Distribution Methods**
+   - Laminated printed copies for build day
+   - Digital versions for pre-event review
+   - Large format posters for group reference
+   - QR codes linking to online guides with videos
+
+### 1 Week Before Build
+
+| Week | Priority Tasks | Team Members | Deliverables |
+|------|----------------|--------------|-------------|
+| Week 5 | • Confirm all volunteer participants<br>• Verify material deliveries<br>• Organize tools and equipment<br>• Conduct pre-build team meeting | • Project Manager<br>• Foreman<br>• Crew Leads<br>• Entire Core Team | • Final volunteer list<br>• Material inventory<br>• Tool organization plan<br>• Meeting minutes |
+
+#### Pre-Build Team Meeting Agenda
+
+The pre-build meeting ensures everyone understands the project and their roles:
+
+1. **Meeting Components**
+   - Project overview with visual aids
+   - Detailed timeline review
+   - Role and responsibility confirmation
+   - Safety protocol review
+   - Communication plan establishment
+   - Question and answer session
+   - Site walk-through (if possible)
+
+2. **Discussion Points**
+   - Contingency plans for weather or material issues
+   - Special considerations for specific volunteers
+   - Food and refreshment plan
+   - Documentation priorities
+   - Host involvement strategy
+
+3. **Documentation Requirements**
+   - Meeting attendance record
+   - Action items with assigned responsibility
+   - Final questions and resolutions
+   - Updated timeline if changes made
+
+### Build Day
+
+| Phase | Priority Tasks | Team Members | Deliverables |
+|-------|----------------|--------------|-------------|
+| Pre-volunteer | • Site setup<br>• Material staging<br>• Safety station creation | • Core Team | • Ready build site<br>• Organized materials<br>• Established work zones |
+| Morning | • Volunteer orientation<br>• Team assignments<br>• Foundation work | • All Team | • Trained volunteers<br>• Established foundations<br>• Progress documentation |
+| Afternoon | • Core construction<br>• System installation<br>• Testing and verification | • All Team | • Completed installation<br>• Functional system<br>• Post-build documentation |
+
+#### Volunteer Management Best Practices
+
+Managing volunteers effectively is critical to project success:
+
+1. **Orientation Essentials**
+   - Welcoming and inclusive atmosphere
+   - Clear explanation of project purpose and impact
+   - Specific safety instructions relevant to the day
+   - Overview of schedule and expectations
+   - Introduction to team leads and structure
+
+2. **Task Assignment Strategy**
+   - Match tasks to skill levels and interests
+   - Pair experienced volunteers with newcomers
+   - Rotate tasks to prevent fatigue and share learning
+   - Create clear start and end points for each task
+   - Provide visual examples of completed work
+
+3. **Supervision Approach**
+   - Maintain 1:5 ratio of experienced leaders to new volunteers
+   - Schedule regular progress check-ins
+   - Offer help before it's requested
+   - Provide positive reinforcement and correction
+   - Document and share successful techniques
+
+4. **Engagement Maintenance**
+   - Schedule regular water and rest breaks
+   - Share milestone achievements with full team
+   - Take group photos at key completion points
+   - Provide learning moments throughout the day
+   - Celebrate contributions and progress
+
+### Post-Build Week
+
+| Timing | Priority Tasks | Team Members | Deliverables |
+|--------|----------------|--------------|-------------|
+| 1-7 Days After | • Send thank-you messages<br>• Complete documentation<br>• Verify system performance<br>• Gather initial feedback | • Project Manager<br>• Documentation Lead<br>• Technical Specialists | • Thank-you messages<br>• Complete documentation<br>• Performance report<br>• Feedback summary |
+
+## Materials Sourcing & Management
+
+Strategic materials management ensures sustainability, cost-effectiveness, and smooth implementation.
+
+### Sustainable Sourcing Hierarchy
+
+Apply this hierarchy when sourcing materials:
+
+1. **Reused/Reclaimed** - Highest priority: Materials diverted from waste stream
+   - Contact deconstruction companies for lumber and building materials
+   - Source second-life solar panels from system upgrades
+   - Use food-grade containers for planting from restaurants/food processors
+   - Consider pallet wood for non-structural applications
+
+2. **Locally Available** - Second priority: Materials with minimal transportation
+   - Partner with local suppliers for discounted or donated materials
+   - Use native and locally grown plants
+   - Source from local hardware stores and lumber yards
+   - Consider community material exchanges and free-cycle networks
+
+3. **Environmentally Preferable** - Third priority: Materials with lower environmental impact
+   - Select FSC-certified lumber when new wood is required
+   - Choose materials with recycled content
+   - Opt for non-toxic finishes and fasteners
+   - Select materials with minimal packaging
+
+4. **Conventional** - Last resort: Standard new materials
+   - Only when other options are unavailable
+   - Focus on durability and longevity
+   - Select materials that can be recycled at end-of-life
+   - Document why more sustainable options weren't feasible
+
+## Technical Implementation Guidelines
+
+Different project types require specific technical approaches. The following guidance addresses common Green Build Party installations.
+
+### Solar Component Implementation
+
+For effective solar energy implementations:
+
+1. **System Sizing**
+   - Base on actual load requirements (calculate watt-hours needed)
+   - Design for 2-3 days of autonomy without sun
+   - Include 20% capacity buffer for system degradation
+   - Consider seasonal variations in production
+
+2. **Component Selection**
+   - Prioritize quality and reliability over lowest cost
+   - Verify compatibility between components
+   - Select appropriate battery technology for use case
+   - Use properly sized wiring and protection components
+
+3. **Installation Best Practices**
+   - Orient panels for optimal sun exposure (typically south-facing)
+   - Install at proper angle based on latitude
+   - Ensure secure mounting against wind loads
+   - Implement proper grounding and surge protection
+   - Label all components and connections clearly
+   - Use weather-resistant enclosures for electronics
+
+### Water System Implementation
+
+For rainwater harvesting and irrigation systems:
+
+1. **Collection Calculation**
+   - Calculate catchment area in square feet
+   - Use local rainfall data for sizing
+   - Formula: Gallons = Area (sq.ft) × Rainfall (in) × 0.623
+   - Design for typical dry period duration
+
+2. **Filtration Approaches**
+   - First-flush diverters for initial rainfall contaminants
+   - Screen filters for debris (leaves, twigs)
+   - Finer filtration based on intended water use
+   - Consider bio-filtration for certain applications
+
+3. **Storage Considerations**
+   - Use opaque containers to prevent algae growth
+   - Ensure structural support adequate for water weight
+   - Include overflow provision for heavy rainfall
+   - Implement mosquito prevention measures
+   - Consider aesthetics and visual integration
+
+## Quality Assurance Framework
+
+Maintaining consistent quality across builds requires a structured approach.
+
+### Pre-Build Quality Checks
+
+Verify these elements before build day:
+
+1. **Design Quality**
+   - Peer review of all technical specifications
+   - Verification of calculations and sizing
+   - Confirmation of material compatibility
+   - Assessment of design against site conditions
+   - Review of safety considerations
+
+2. **Materials Quality**
+   - Inspection of all critical components
+   - Verification of specifications
+   - Testing of electrical components
+   - Structural material grading
+   - Rejection protocols for substandard materials
+
+3. **Documentation Quality**
+   - Clear, accurate construction guides
+   - Complete and current material lists
+   - Comprehensive safety protocols
+   - Detailed site preparation instructions
+   - Accessible reference materials
+
+### Build Day Quality Assurance
+
+Implement these practices during construction:
+
+1. **Designated QA Role**
+   - Assign specific quality responsibility
+   - Schedule regular inspection points
+   - Empower to pause work for corrections
+   - Document quality observations
+
+2. **Critical Checkpoint System**
+   - Identify key quality verification points
+   - Create simple inspection checklists
+   - Require sign-off before proceeding
+   - Document with photos at each checkpoint
+
+3. **Testing Protocols**
+   - Test components before final installation
+   - Verify measurements before cutting
+   - Check levels and alignments continuously
+   - Conduct load tests where appropriate
+   - Document all test results
+
+## Volunteer Experience Design
+
+Creating a positive, educational volunteer experience requires intentional design.
+
+### Skill-Building Framework
+
+Integrate learning throughout the build process:
+
+1. **Skill Identification**
+   - Map all skills employed in project
+   - Categorize by difficulty and prerequisite knowledge
+   - Identify transferable vs. specialized skills
+   - Create progression pathways
+
+2. **Teaching Methodology**
+   - Brief theory introduction (5-10 minutes)
+   - Demonstration of technique
+   - Guided practice with supervision
+   - Independent application
+   - Knowledge reinforcement and sharing
+
+3. **Documentation of Skill Development**
+   - Pre/post skill self-assessment
+   - Skill passport or tracking system
+   - Photo/video documentation of skill application
+   - Certification of specific competencies
+   - Pathway to advanced skill development
+
+### Volunteer Journey Mapping
+
+Design the complete volunteer experience:
+
+1. **Pre-Event Engagement**
+   - Clear communication of expectations
+   - Pre-reading or video resources
+   - Connection to project purpose
+   - Preparation instructions
+   - Excitement building
+
+2. **Arrival Experience**
+   - Welcoming entry point
+   - Efficient check-in process
+   - Immediate engagement activity
+   - Introduction to team members
+   - Clear initial directions
+
+3. **Participation Arc**
+   - Initial success opportunity
+   - Gradual skill building
+   - Rotation through different activities
+   - Visible progress markers
+   - Celebration of achievements
+
+## Continuous Improvement Methodology
+
+Systematic improvement ensures each build is better than the last.
+
+### Feedback Collection Methods
+
+Gather comprehensive feedback from all stakeholders:
+
+1. **Participant Surveys**
+   - Immediate post-event survey (day-of)
+   - Detailed follow-up survey (1 week after)
+   - Focused questions on specific aspects
+   - Mix of rating scales and open-ended questions
+   - Opportunity for anonymous feedback
+
+2. **Team Debrief Sessions**
+   - Structured discussion format
+   - Dedicated time for each project phase
+   - "What worked well" and "What could improve" for each area
+   - Action item identification
+   - Documentation of insights
+
+3. **Host Feedback**
+   - Initial satisfaction assessment
+   - Functional evaluation of installation
+   - 30-day follow-up on performance
+   - Seasonal check-ins
+   - Documentation of any issues or successes
+
+## Conclusion
+
+This implementation guide provides a practical framework for executing successful Green Build Party projects. By following these guidelines, teams can consistently deliver high-quality sustainable infrastructure while building community skills and resilience. The combination of technical excellence, volunteer engagement, and systematic improvement creates transformative experiences with lasting impact.
+
+Each Green Build Party serves as a concrete demonstration of community-scale sustainability solutions, creating tangible examples that can be replicated and scaled. Through this model, we build not just physical infrastructure, but the human capacity and community connections needed for broader sustainability transformation.
+
+## Appendix: Visual Explanations of Process Flows
+
+### Complete Implementation Timeline Visualization
+
+The timeline below integrates all project phases, showing the relationships between planning, procurement, build day, and post-build activities:
+
+```mermaid
+gantt
+    title Comprehensive Green Build Party Implementation Timeline
+    dateFormat  YYYY-MM-DD
+    axisFormat %d-%m
+    
+    section Planning Phase
+    Project Selection & Scoping       :a1, 2023-01-01, 14d
+    Team Assembly                     :a2, after a1, 7d
+    Initial Site Assessment           :a3, after a2, 7d
+    Detailed Design Development       :a4, after a3, 14d
+    
+    section Procurement Phase
+    Materials Research & Sourcing     :b1, after a3, 21d
+    Sustainable Materials Selection   :b2, 2023-01-25, 14d
+    Equipment Scheduling              :b3, after b2, 7d
+    Tool & Safety Equipment Prep      :b4, after b3, 7d
+    
+    section Community Engagement
+    Volunteer Recruitment             :c1, 2023-01-20, 28d
+    Skill Assessment                  :c2, after c1, 7d
+    Training Material Development     :c3, after c2, 14d
+    Pre-Build Communications          :c4, after c3, 7d
+    
+    section Build Preparation
+    Site Preparation                  :d1, 2023-03-01, 2d
+    Materials Staging                 :d2, after d1, 1d
+    Safety Station Setup              :d3, after d2, 1d
+    
+    section Build Day
+    Morning: Orientation & Foundations :e1, 2023-03-05, 4h
+    Afternoon: Core Construction       :e2, after e1, 4h
+    Testing & Verification             :e3, after e2, 2h
+    
+    section Post-Build
+    Immediate Site Cleanup            :f1, after e3, 1d
+    Documentation Compilation         :f2, after f1, 7d
+    Performance Assessment            :f3, after f2, 7d
+    30-Day Follow-up                  :f4, after f3, 1d
+    Long-term Impact Measurement      :f5, after f4, 60d
+```
+
+### Project Selection Decision Flow
+
+This flowchart explains the decision-making process for evaluating and selecting Green Build Party projects:
+
+```mermaid
+flowchart TD
+    A[Project Idea Submitted] --> B{Meets Basic Criteria?}
+    B -->|No| C[Provide Feedback for Improvement]
+    C --> A
+    
+    B -->|Yes| D[Score Against Selection Matrix]
+    D --> E{Score > 3.5?}
+    E -->|No| F{Score > 3.0?}
+    F -->|No| G[Reject or Redesign Project]
+    F -->|Yes| H[Identify Improvements Needed]
+    H --> I[Refine Project Scope]
+    I --> D
+    
+    E -->|Yes| J[Preliminary Approval]
+    J --> K[Site Assessment]
+    K --> L{Site Suitable?}
+    L -->|No| M[Find Alternative Site]
+    M --> K
+    
+    L -->|Yes| N[Final Project Approval]
+    N --> O[Begin Implementation Timeline]
+```
+
+### Materials Selection Process
+
+This diagram illustrates the sustainable materials sourcing strategy:
+
+```mermaid
+flowchart TD
+    A[Identify Material Need] --> B[Check Reused/Reclaimed Sources]
+    B --> C{Available?}
+    C -->|Yes| D[Assess Quality & Quantity]
+    D --> E{Meets Requirements?}
+    E -->|Yes| F[Source From Reused Materials]
+    E -->|No| G[Check Local Sources]
+    
+    C -->|No| G
+    G --> H{Available Locally?}
+    H -->|Yes| I[Assess Sustainability]
+    I --> J{Meets Standards?}
+    J -->|Yes| K[Source Locally]
+    J -->|No| L[Check Environmentally Preferable Options]
+    
+    H -->|No| L
+    L --> M{Available?}
+    M -->|Yes| N[Source Eco-Friendly Materials]
+    M -->|No| O[Use Conventional with Documentation]
+    
+    F --> P[Add to Materials Plan]
+    K --> P
+    N --> P
+    O --> P
+    
+    P --> Q[Arrange Transportation & Storage]
+```
+
+### Build Day Team Workflow
+
+This diagram shows how different teams interact during the build day:
+
+```mermaid
+flowchart TD
+    A[Morning Orientation] --> B[Core Team Distributes Initial Tasks]
+    
+    B --> C[Foundation Team]
+    B --> D[Construction Team]
+    B --> E[Systems Team]
+    B --> F[Support Team]
+    
+    C --> G[Site Preparation]
+    G --> H[Foundation Layout]
+    H --> I[Foundation Construction]
+    
+    D --> J[Frame Preparation]
+    J --> K[Wall/Structure Assembly]
+    K --> L[Roof/Cover Installation]
+    
+    E --> M[Systems Planning]
+    M --> N[Component Installation]
+    N --> O[System Testing]
+    
+    F --> P[Materials Management]
+    F --> Q[Refreshments & Support]
+    F --> R[Documentation]
+    
+    I --> S[Structure Mounting]
+    S --> K
+    
+    L --> T[Systems Integration]
+    O --> T
+    
+    T --> U[Final Testing]
+    U --> V[Project Completion]
+    V --> W[Cleanup & Celebration]
+```
+
+### Quality Assurance Checkpoints
+
+This diagram visualizes the critical quality checkpoints throughout the project:
+
+```mermaid
+flowchart TD
+    A[Project Start] --> B[Design QA Review]
+    B --> C{Pass?}
+    C -->|No| D[Design Revision]
+    D --> B
+    
+    C -->|Yes| E[Materials QA Inspection]
+    E --> F{Pass?}
+    F -->|No| G[Material Substitution/Replacement]
+    G --> E
+    
+    F -->|Yes| H[Pre-Build Documentation QA]
+    H --> I{Pass?}
+    I -->|No| J[Documentation Update]
+    J --> H
+    
+    I -->|Yes| K[Build Day: Foundation QA]
+    K --> L{Pass?}
+    L -->|No| M[Foundation Correction]
+    M --> K
+    
+    L -->|Yes| N[Structure QA]
+    N --> O{Pass?}
+    O -->|No| P[Structure Adjustment]
+    P --> N
+    
+    O -->|Yes| Q[Systems QA]
+    Q --> R{Pass?}
+    R -->|No| S[Systems Correction]
+    S --> Q
+    
+    R -->|Yes| T[Final Inspection]
+    T --> U{Pass?}
+    U -->|No| V[Final Corrections]
+    V --> T
+    
+    U -->|Yes| W[Project Handover]
+    W --> X[Post-Build Assessment]
+```
+
+### Skill Development Pathway
+
+This diagram shows the volunteer skill progression through the Green Build Party program:
+
+```mermaid
+flowchart LR
+    A[New Volunteer] --> B[Basic Skills Training]
+    B --> C[First Build Participation]
+    C --> D[Skill Assessment]
+    
+    D --> E[Intermediate Skills]
+    E --> F[Multiple Build Participation]
+    F --> G[Specialized Training]
+    
+    G --> H[Team Leader Role]
+    H --> I[Mentor Role]
+    I --> J[Technical Specialist]
+    
+    G --> K[Project Coordinator]
+    K --> L[Project Manager]
+    
+    D --> M[Documentation Skills]
+    M --> N[Media Specialist]
+    
+    D --> O[Community Outreach]
+    O --> P[Recruitment Coordinator]
+    P --> Q[Community Liaison]
+```
+
+These visual diagrams provide a comprehensive understanding of the Green Build Party implementation processes, workflows, and decision paths. Each diagram is designed to clearly communicate complex processes in an accessible format, supporting both planning and execution of successful community building projects.
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Make sure highlight.js is initialized first
+      if (typeof hljs !== 'undefined') {
+        hljs.highlightAll();
+      } else {
+        console.error("Highlight.js is not loaded");
+      }
+      
+      // Initialize mermaid
+      mermaid.initialize({ startOnLoad: true });
+      
+      // Get the markdown content from the embedded script
+      const markdownElement = document.getElementById('markdown-source');
+      const markdown = markdownElement.textContent;
+      
+      // Initialize markdown-it with safe highlight function
+      const md = window.markdownit({
+        html: true,
+        linkify: true,
+        typographer: true,
+        highlight: function (str, lang) {
+          if (lang && typeof hljs !== 'undefined' && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(str, { language: lang }).value;
+            } catch (err) {
+              console.error("Highlight error:", err);
+              return ''; // Use default escaping
+            }
+          }
+          return ''; // Use default escaping
+        }
+      });
+      
+      // Render the markdown content
+      const html = md.render(markdown);
+      document.getElementById('content').innerHTML = html;
+      
+      // Process mermaid diagrams
+      try {
+        mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+      } catch (err) {
+        console.error("Mermaid initialization error:", err);
+      }
+      
+      // Build table of contents
+      buildTableOfContents();
+      
+      // Initialize smooth scrolling for anchor links
+      initSmoothScrolling();
+    });
+    
+    function buildTableOfContents() {
+      const headings = document.querySelectorAll('h2, h3');
+      const tocContent = document.getElementById('toc-content');
+      
+      headings.forEach(heading => {
+        // Create ID if none exists
+        if (!heading.id) {
+          heading.id = heading.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+        }
+        
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent;
+        link.className = `toc-link toc-${heading.tagName.toLowerCase()}`;
+        
+        tocContent.appendChild(link);
+      });
+    }
+    
+    function initSmoothScrolling() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetElement = document.querySelector(this.getAttribute('href'));
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+            
+            // Update active state in TOC
+            document.querySelectorAll('.toc-link').forEach(link => {
+              link.classList.remove('active');
+            });
+            this.classList.add('active');
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html> 

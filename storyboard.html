@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Build Party - Visual Storyboard</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/github.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/highlight.min.js"></script>
+  
+  <!-- Markdown-it for rendering markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
+  
+  <!-- Mermaid for diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script>
+
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 1200px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+    h1 {
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #0d6efd;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #dee2e6;
+      margin-top: 2rem;
+    }
+    h3 {
+      color: #198754;
+    }
+    table {
+      width: 100%;
+      margin-bottom: 1rem;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      padding: 0.75rem;
+      border: 1px solid #dee2e6;
+    }
+    table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+    pre {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    code {
+      color: #d63384;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    blockquote {
+      border-left: 4px solid #0d6efd;
+      padding-left: 1rem;
+      color: #6c757d;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.25rem;
+      color: #6c757d;
+    }
+    #table-of-contents {
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      padding-right: 15px;
+    }
+    .toc-link {
+      display: block;
+      padding: 0.25rem 0;
+      color: #495057;
+      text-decoration: none;
+    }
+    .toc-link:hover {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    .toc-link.active {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+    .toc-h2 {
+      padding-left: 1rem;
+    }
+    .toc-h3 {
+      padding-left: 2rem;
+    }
+    @media (max-width: 991.98px) {
+      #table-of-contents {
+        position: static;
+        margin-bottom: 2rem;
+      }
+    }
+    @media print {
+      #table-of-contents {
+        display: none;
+      }
+      .col-lg-9 {
+        width: 100%;
+      }
+    }
+    #markdown-source {
+      display: none;
+    }
+    .navigation-bar {
+      margin-bottom: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .navigation-bar a {
+      margin-right: 20px;
+      color: #0d6efd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .navigation-bar a:hover {
+      text-decoration: underline;
+    }
+    .navigation-bar a.active {
+      font-weight: 700;
+      border-bottom: 2px solid #0d6efd;
+    }
+    .image-prompt {
+      background-color: #f8f9fa;
+      border-left: 4px solid #28a745;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.25rem;
+    }
+    .image-prompt h4 {
+      color: #28a745;
+      margin-top: 0;
+    }
+    .purpose-box {
+      background-color: #e9f7ef;
+      padding: 0.75rem;
+      border-radius: 0.25rem;
+      border-left: 4px solid #198754;
+      margin-bottom: 1.5rem;
+    }
+    .chart-container {
+      position: relative;
+      margin: 20px auto;
+      height: 400px;
+      width: 100%;
+    }
+    .image-placeholder {
+      background-color: #e9ecef;
+      border: 1px dashed #6c757d;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      border-radius: 0.25rem;
+      padding: 1rem;
+      text-align: center;
+    }
+    .timeline-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .timeline-item {
+      padding: 20px 30px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: -10px;
+      background-color: white;
+      border: 4px solid #0d6efd;
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .left {
+      left: 0;
+    }
+    .right {
+      left: 50%;
+    }
+    .right::after {
+      left: -10px;
+    }
+    .content {
+      padding: 20px 30px;
+      background-color: white;
+      position: relative;
+      border-radius: 6px;
+      border: 1px solid #dee2e6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation bar -->
+    <div class="navigation-bar">
+      <a href="index.html">Overview</a>
+      <a href="GreenBuildParty.html">Roles & Tasks</a>
+      <a href="implementation.html">Implementation Guide</a>
+      <a href="storyboard.html" class="active">Visual Storyboard</a>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-3">
+        <div id="table-of-contents">
+          <h5>Table of Contents</h5>
+          <div id="toc-content"></div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div id="content">
+          <div class="loading">Loading content...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js data for budget visualization -->
+  <script>
+    // Budget allocation chart data
+    const budgetData = {
+      labels: [
+        'Materials & Supplies (45%)',
+        'Tools & Equipment (15%)',
+        'Food & Refreshments (10%)',
+        'Transportation & Logistics (8%)',
+        'Documentation & Media (5%)',
+        'Administrative Costs (7%)',
+        'Contingency (10%)'
+      ],
+      datasets: [{
+        label: 'Budget Allocation',
+        data: [45, 15, 10, 8, 5, 7, 10],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.7)',
+          'rgba(255, 99, 132, 0.7)',
+          'rgba(255, 206, 86, 0.7)',
+          'rgba(75, 192, 192, 0.7)',
+          'rgba(153, 102, 255, 0.7)',
+          'rgba(255, 159, 64, 0.7)',
+          'rgba(199, 199, 199, 0.7)'
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(199, 199, 199, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    // Impact distribution chart data
+    const impactData = {
+      labels: [
+        'Environmental Impact (40%)',
+        'Social Impact (35%)',
+        'Economic Impact (25%)'
+      ],
+      datasets: [{
+        label: 'Impact Distribution',
+        data: [40, 35, 25],
+        backgroundColor: [
+          'rgba(75, 192, 192, 0.7)',
+          'rgba(153, 102, 255, 0.7)',
+          'rgba(255, 159, 64, 0.7)'
+        ],
+        borderColor: [
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    // Material sources chart data
+    const materialSourcesData = {
+      labels: [
+        'Recycled (35%)',
+        'New-Sustainable (25%)',
+        'Donated (30%)',
+        'Repurposed (10%)'
+      ],
+      datasets: [{
+        label: 'Material Sources',
+        data: [35, 25, 30, 10],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.7)',
+          'rgba(75, 192, 192, 0.7)', 
+          'rgba(255, 206, 86, 0.7)',
+          'rgba(153, 102, 255, 0.7)'
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(153, 102, 255, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    // Value creation over time data
+    const valueCreationData = {
+      labels: ['Initial', 'Month 3', 'Month 6', 'Year 1', 'Year 2', 'Year 5'],
+      datasets: [
+        {
+          label: 'Cumulative Value ($)',
+          data: [5000, 6500, 8000, 11000, 14000, 20000],
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        },
+        {
+          label: 'Initial Investment',
+          data: [5000, 5000, 5000, 5000, 5000, 5000],
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2,
+          borderDash: [5, 5],
+          fill: false
+        }
+      ]
+    };
+  </script>
+
+  <!-- Embedded markdown content -->
+  <script id="markdown-source" type="text/markdown">
+# Green Build Party - Visual Storyboard
+
+## Overview
+
+This visual storyboard provides comprehensive image prompts for documenting and communicating the Green Build Party project from inception to completion. Each visual narrative is designed to tell a specific part of the story, highlighting the roles, processes, and impacts of the Green Build Party model through compelling imagery.
+
+## Project Journey Storyboard
+
+### 1. Project Genesis: The Community Need (Planning Phase)
+<img src="storyimages/image1.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> An aerial view of an urban neighborhood with limited green space. Several community members stand in a vacant lot surrounded by concrete, pointing and discussing possibilities. Early morning light casts long shadows as a diverse group gestures toward different areas of the space. A faded overlay shows the potential transformation with garden beds, a greenhouse, and gathering space.</p>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Establishes the "why" behind the Green Build Party, showing the community-centered approach from the very beginning. Shows the Project Manager and Site Assessment Team during the initial planning stage.
+</div>
+
+### 2. The Planning Hub: Core Team Meeting (Week 5)
+<img src="storyimages/image2.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+
+<strong>Purpose:</strong> Establishes the "why" behind the Green Build Party, showing the community-centered approach from the very beginning. Shows the Project Manager and Site Assessment Team during the initial planning stage.
+
+<strong>Purpose:</strong> Establishes the "why" behind the Green Build Party, showing the community-centered approach from the very beginning. Shows the Project Manager and Site Assessment Team during the initial planning stage.
+
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> Interior of a community center with a large table covered in site plans, material lists, and sketches. The core team sits around the table with laptops, tablets, and notebooks. The Project Manager stands at the head of the table pointing to a projected timeline on the wall. Materials Coordinator reviews inventory lists while the Foreman examines structural plans.</p>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Visualizes the collaborative planning process and introduces the core team structure with each role represented. Reinforces the organized nature of the project preparation.
+</div>
+
+### 3. Materials Sourcing Journey (Week 4)
+<img src="storyimages/image3.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> Split-frame image showing:</p>
+  <ul>
+    <li>Materials Coordinator at a lumber yard selecting FSC-certified wood</li>
+    <li>Team members at a hardware store selecting sustainable building materials</li>
+    <li>Team at a garden center selecting native plants and soil mixes</li>
+    <li>Close-up of the Materials Inventory Checklist with items checked off</li>
+  </ul>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Illustrates the sustainable procurement process outlined in the cost and inventory document, emphasizing the careful selection of materials according to the project's environmental principles.
+</div>
+
+### 4. Build Day Morning: Site Activation (7:00 AM)
+<img src="storyimages/image4.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> Early morning at the build site with golden sunrise light. The Logistics Team sets up stations marked with colored flags. Volunteers arrive and sign in at a welcome table where they receive safety vests, name tags, and team assignments. Trucks unload organized materials pallets. The Foreman and Station Leads review final plans.</p>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Captures the excitement and organization of build day morning, showing the careful site preparation and volunteer check-in process.
+</div>
+
+### 5. Specialized Teams in Action (9:30 AM)
+<img src="storyimages/image5.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> Four-panel image showing:</p>
+  <ul>
+    <li>Structural Team constructing raised garden beds and greenhouse frame</li>
+    <li>Water Systems Team installing rainwater collection system</li>
+    <li>Solar Systems Team mounting solar panels and connecting electrical components</li>
+    <li>Growing Systems Team preparing soil mixes and filling garden beds</li>
+  </ul>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Illustrates the parallel workflows happening simultaneously across the site, showing the specialized nature of each build station and the skill development occurring.
+</div>
+
+### 6. Project Completion (6:30 PM)
+<img src="storyimages/image6.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> The transformed space at golden hour as the sun begins to set. All volunteers gathered for a completion ceremony. The Project Manager cutting a ribbon across the entrance to the new garden space. Completed infrastructure clearly visible: raised beds planted with seedlings, greenhouse assembled, solar panels installed on shed roof, rainwater collection system connected to irrigation.</p>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Provides the satisfying "after" image that contrasts with the opening scene, showing the complete transformation accomplished in a single day.
+</div>
+
+## Cost and Resource Visualization
+
+### Budget Allocation
+
+<div class="chart-container">
+  <canvas id="budgetChart"></canvas>
+</div>
+
+The Green Build Party typical budget ranges from $3,500-$7,500 depending on project scale, with costs distributed as shown in the chart above. This visualization helps project planners understand where resources are allocated and prioritize spending to maximize impact.
+
+### Material Sources and Sustainability
+
+<div class="chart-container">
+  <canvas id="materialSourcesChart"></canvas>
+</div>
+
+The Green Build Party model emphasizes sustainable sourcing, with a target of at least 75% of materials coming from recycled, donated, or sustainably harvested sources. This visualization shows the typical distribution of material sources for a standard project.
+
+### Value Creation Over Time
+
+<div class="chart-container">
+  <canvas id="valueCreationChart"></canvas>
+</div>
+
+The Green Build Party creates value that extends far beyond the initial build day. This chart illustrates how the initial investment of approximately $5,000 generates increasing value over time through:
+
+- Direct infrastructure value ($5,000-15,000)
+- Resource savings (water, energy)
+- Skill development for participants
+- Community building and social capital
+- Environmental benefits
+
+## Role-Specific Visual Narratives
+
+### The Project Manager's Journey
+
+<div class="timeline-container">
+  <div class="timeline-item left">
+    <div class="content">
+      <h4>Initial Community Engagement</h4>
+      <p>The Project Manager facilitating a community input session, listening to local needs and priorities.</p>
+    </div>
+  </div>
+  <div class="timeline-item right">
+    <div class="content">
+      <h4>Master Planning</h4>
+      <p>Creating the site-specific adaptation plan with project management software, timelines, and resource allocation templates.</p>
+    </div>
+  </div>
+  <div class="timeline-item left">
+    <div class="content">
+      <h4>Team Building</h4>
+      <p>Interviewing potential team leads, reviewing skill sets and assigning roles.</p>
+    </div>
+  </div>
+  <div class="timeline-item right">
+    <div class="content">
+      <h4>Coordination Hub</h4>
+      <p>Build day coordination point, moving between stations, consulting the master plan, addressing questions.</p>
+    </div>
+  </div>
+  <div class="timeline-item left">
+    <div class="content">
+      <h4>Impact Assessment</h4>
+      <p>Reviewing documentation with the Impact Measurement Lead, analyzing metrics of success.</p>
+    </div>
+  </div>
+</div>
+
+### The Foreman's Journey
+
+<div class="timeline-container">
+  <div class="timeline-item left">
+    <div class="content">
+      <h4>Technical Planning</h4>
+      <p>Reviewing architectural plans and making site-specific adaptations.</p>
+    </div>
+  </div>
+  <div class="timeline-item right">
+    <div class="content">
+      <h4>Materials Optimization</h4>
+      <p>Working with the Materials Coordinator to optimize the cutting plan for lumber and other materials to minimize waste.</p>
+    </div>
+  </div>
+  <div class="timeline-item left">
+    <div class="content">
+      <h4>Build Sequence Development</h4>
+      <p>Creating station-specific instruction sheets with simplified, step-by-step visual guides.</p>
+    </div>
+  </div>
+  <div class="timeline-item right">
+    <div class="content">
+      <h4>Technical Leadership</h4>
+      <p>Demonstrating proper technique for critical connection details to Station Leads.</p>
+    </div>
+  </div>
+  <div class="timeline-item left">
+    <div class="content">
+      <h4>Quality Assurance</h4>
+      <p>Inspecting completed elements with a checklist, testing structural integrity, and verifying measurements against plans.</p>
+    </div>
+  </div>
+</div>
+
+## Impact Visualization Series
+
+### Triple Impact Framework
+
+<div class="chart-container">
+  <canvas id="impactChart"></canvas>
+</div>
+
+The Green Build Party model creates integrated impact across three key dimensions, as shown in this chart. Our measurement framework tracks specific metrics in each category:
+
+**Environmental Metrics:**
+- Gallons of water captured annually
+- Square footage of new permeable surfaces
+- Tons of CO2 sequestered by new plantings
+- Temperature reduction in surrounding area
+- Biodiversity increase with counts of beneficial species
+
+**Social Metrics:**
+- Number of new community connections formed
+- Hours of educational programming supported
+- Number of people with improved food access
+- Percentage increase in community gathering activities
+- Skill development among participants
+
+**Economic Metrics:**
+- Infrastructure value created vs. project cost
+- Projected yearly harvest value
+- Utility savings (water bills, energy costs)
+- Marketable skills developed
+- Local business engagement
+
+## Implementation Timeline Visualization
+<img src="storyimages/image7.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> Circular timeline diagram showing the full project cycle from inception through completion and evaluation. Each phase represented by a segment with key activities:</p>
+  <ul>
+    <li>Pre-Planning Phase (6+ weeks before)</li>
+    <li>Planning Phase (4-6 weeks before)</li>
+    <li>Preparation Phase (2-4 weeks before)</li>
+    <li>Build Day</li>
+    <li>Post-Build Phase</li>
+  </ul>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Shows how the one-day build is supported by careful preparation and follow-through, emphasizing the project's systematic approach.
+</div>
+
+## Conclusion: The Complete Visual Story
+<img src="storyimages/image8.png" alt="Project Genesis: Community Planning" class="img-fluid rounded shadow-sm mb-3" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;"></img>
+
+<div class="image-placeholder">
+  <p><strong>Visual Placeholder:</strong> A composite image showing the complete journey from empty space to thriving community asset. The image transitions from left to right showing the temporal progression from initial community planning through build day to thriving space months later.</p>
+</div>
+
+<div class="purpose-box">
+  <strong>Purpose:</strong> Provides a powerful summary visual that encapsulates the complete Green Build Party story from concept to lasting impact.
+</div>
+
+</script>
+
+  <!-- JavaScript for rendering -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize mermaid
+      mermaid.initialize({ 
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: { htmlLabels: true }
+      });
+      
+      // Initialize markdown-it
+      const md = window.markdownit({
+        html: true,
+        linkify: true,
+        typographer: true
+      });
+      
+      // Parse and render the markdown
+      const markdownSource = document.getElementById('markdown-source').textContent;
+      document.getElementById('content').innerHTML = md.render(markdownSource);
+      
+      // Generate table of contents
+      const headings = document.querySelectorAll('#content h2, #content h3');
+      const tocContent = document.getElementById('toc-content');
+      
+      if (headings.length > 0) {
+        headings.forEach(function(heading) {
+          const id = heading.textContent.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+          heading.id = id;
+          
+          const link = document.createElement('a');
+          link.textContent = heading.textContent;
+          link.href = '#' + id;
+          link.className = 'toc-link toc-' + heading.tagName.toLowerCase();
+          link.onclick = function() {
+            document.querySelectorAll('.toc-link').forEach(function(el) {
+              el.classList.remove('active');
+            });
+            this.classList.add('active');
+          };
+          
+          tocContent.appendChild(link);
+        });
+      } else {
+        tocContent.innerHTML = '<p>No headings found</p>';
+      }
+      
+      // Highlight code blocks
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightBlock(block);
+      });
+      
+      // Render mermaid diagrams
+      mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+
+      // Create charts
+      setTimeout(function() {
+        // Budget chart
+        new Chart(document.getElementById('budgetChart'), {
+          type: 'pie',
+          data: budgetData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Green Build Party Budget Allocation',
+                font: {
+                  size: 16
+                }
+              },
+              legend: {
+                position: 'right',
+              }
+            }
+          }
+        });
+
+        // Impact chart
+        new Chart(document.getElementById('impactChart'), {
+          type: 'pie',
+          data: impactData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Green Build Party Impact Distribution',
+                font: {
+                  size: 16
+                }
+              },
+              legend: {
+                position: 'right',
+              }
+            }
+          }
+        });
+
+        // Material sources chart
+        new Chart(document.getElementById('materialSourcesChart'), {
+          type: 'pie',
+          data: materialSourcesData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Green Build Party Material Sources',
+                font: {
+                  size: 16
+                }
+              },
+              legend: {
+                position: 'right',
+              }
+            }
+          }
+        });
+
+        // Value creation chart
+        new Chart(document.getElementById('valueCreationChart'), {
+          type: 'line',
+          data: valueCreationData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Value Creation Over Time',
+                font: {
+                  size: 16
+                }
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+              }
+            },
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: 'Value ($)'
+                },
+                beginAtZero: true
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Time Period'
+                }
+              }
+            }
+          }
+        });
+      }, 500);
+    });
+  </script>
+</body>
+</html> 
