@@ -1,3 +1,5 @@
+[Listen on SoundCloud](https://soundcloud.com/blaze45me/adam-project)
+
  # Green Build Party Project
 
 ## Project Overview
